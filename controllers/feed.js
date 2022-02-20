@@ -41,11 +41,26 @@ exports.createFeed = (req, res) => {
           error: "can not create feed!"
         })
       }
+      feed.thumbnail.data = undefined;
+      feed.thumbnail.contentType = undefined;
       return res.status(200).json(feed);
     })
   })
 }
 
+exports.getFeedById = (req, res, next, id) => {
+  Feed.findById(id).populate("category").exec((err, feed) => {
+    if (err || !feed) {
+      return res.status(400).json({
+        error: "Feed not found in database."
+      })
+    }
+    req.feed = feed;
+    next();
+  })
+}
+
+// This will give us feeds as per user's querry or by default 10 and will sort as well  
 exports.getAllFeeds = (req, res) => {
   let limit = req.query.limit ? parseInt(req.query.limit) : 10;
   let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
@@ -63,4 +78,25 @@ exports.getAllFeeds = (req, res) => {
       }
       return res.json(feeds);
     })
+}
+
+// We will take Thumbnail of each feed one by one
+exports.getThumbnail = (req, res, next) => {
+  if(req.feed.thumbnail.data) {
+    res.set("Content-Type", req.feed.thumbnail.contentType);
+    return res.send(req.feed.thumbnail.data);
+  }
+  next();
+}
+
+// This controller is to check how many different categories of product do we have
+exports.getUniqueCategories = (req, res) => {
+  Feed.distinct("category", {}, (err, categories) => {
+    if (err) {
+      return res.status(400).json({
+        error: "no category found!"
+      })
+    }
+    res.json(categories);
+  })
 }

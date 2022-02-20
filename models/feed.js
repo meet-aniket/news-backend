@@ -20,7 +20,7 @@ let feedSchema = mongoose.Schema(
       trim: true
     },
     published_date: {
-      type: Date,
+      type: String,
       required: true
     },
     thumbnail: {

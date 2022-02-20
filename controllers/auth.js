@@ -18,7 +18,7 @@ exports.signUp = (req, res) => {
     }
 
     const {username, email, phoneNumber, dateOfBirth, gender, language, relationshipStatus, password } = fields;
-    console.log(fields);
+
     if ( !username || !email || !phoneNumber || !dateOfBirth || !gender || !language || !relationshipStatus || !password) {
       return res.status(400).json({
         error: "all fields are necessary!"
@@ -45,6 +45,7 @@ exports.signUp = (req, res) => {
       }
       user.salt = undefined;
       user.encry_password = undefined;
+      user.profileImage = undefined;
       return res.status(200).json(user);
     })
   })
@@ -78,7 +79,8 @@ exports.signIn = (req, res) => {
     
     user.salt = undefined;
     user.encry_password = undefined;
-    return res.json({ 
+    user.profileImage = undefined;
+    return res.json({
       token, 
       user 
     });

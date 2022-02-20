@@ -22,7 +22,16 @@ exports.getUserById = (req, res, next, id) =>{
 exports.getUser = (req, res) => {
   req.profile.salt = undefined;
   req.profile.encry_password = undefined;
+  req.profile.profileImage = undefined;
   return res.json(req.profile);
+}
+
+exports.getPhoto = (req, res, next) => {
+  if (req.profile.profileImage.data) {
+    res.set("Content-Type", req.profile.profileImage.contentType);
+    return res.send(req.profile.profileImage.data);
+  }
+  next();
 }
 
 exports.updateUser = (req, res) => {
@@ -38,6 +47,7 @@ exports.updateUser = (req, res) => {
       }
       user.salt = undefined;
       user.encry_password = undefined;
+      user.profileImage = undefined;
       return res.json(user);
     }
   )
