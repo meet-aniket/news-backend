@@ -9,3 +9,7 @@
 5. Give any random long string to 'SECRET' variable.
 6. Give any available port number of your local system.
 7. start your server via hiting 'npm start' command.
+
+
+# POST API COLLECTION LINK FOR BACKEND :-
+https://web.postman.co/workspace/My-Workspace~6820a72f-2afa-4bc6-8d98-c91d6946b512/request/19414059-05649346-b0a5-4ff8-9d65-307923fca75b
