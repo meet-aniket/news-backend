@@ -1,4 +1,4 @@
-# news-backend
+# The News application backend
 
 # You can setup this backend with the help of these steps :-
 
